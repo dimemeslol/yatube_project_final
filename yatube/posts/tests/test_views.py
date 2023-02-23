@@ -90,7 +90,6 @@ class PostViewTests(TestCase):
         response = self.authorized_client.get(reverse('posts:index'))
         self.assertEqual(response.context.get('page_obj')[0], self.post)
 
-
     def test_group_list_show_correct_context(self):
         response = (self.authorized_client.get(
             reverse('posts:group_list', kwargs={'slug': 'test-slug'})
@@ -266,4 +265,3 @@ class PostViewTests(TestCase):
         self.assertQuerysetEqual(
             response.context.get('page_obj').object_list, []
         )
-
