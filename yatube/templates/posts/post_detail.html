@@ -44,7 +44,7 @@
     {% thumbnail post.image "700x339" crop="center" upscale=True as im %}
       <img class="card-img my-2" src="{{ im.url }}">
     {% endthumbnail %}
-    <p>{{ post.text }}</p>
+    <p>{{ post.text|linebreaksbr }}</p>
       {% if user.is_authenticated %}
       <div class="card my-4">
         <h5 class="card-header">Добавить комментарий:</h5>
@@ -69,7 +69,7 @@
             </a>
           </h5>
           <p>
-            {{ comment.text }}
+            {{ comment.text|linebreaksbr }}
          </p>
         </div>
       </div>

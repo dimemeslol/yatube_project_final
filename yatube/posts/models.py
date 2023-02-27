@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models.constraints import UniqueConstraint
+
 from core.models import CreatedModel
+
 
 User = get_user_model()
 
@@ -32,7 +35,7 @@ class Post(CreatedModel):
     )
 
     class Meta:
-        ordering = ['-pub_date']
+        ordering = ('-pub_date',)
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
 
@@ -55,6 +58,11 @@ class Group(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['slug'])
+        ]
 
 
 class Comment(CreatedModel):
@@ -79,7 +87,7 @@ class Comment(CreatedModel):
     )
 
     class Meta:
-        ordering = ['pub_date']
+        ordering = ('pub_date',)
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
 
@@ -103,3 +111,6 @@ class Follow(CreatedModel):
 
     def __str__(self):
         return f'Фолловер: {self.user}, автор: {self.author}'
+
+    class Meta:
+        UniqueConstraint(fields=['user', 'author'], name='unique_follow')
