@@ -113,4 +113,9 @@ class Follow(CreatedModel):
         return f'Фолловер: {self.user}, автор: {self.author}'
 
     class Meta:
-        UniqueConstraint(fields=['user', 'author'], name='unique_follow')
+        constraints = [
+            UniqueConstraint(
+                fields=['user', 'author'],
+                name='unique_followers'
+            )
+        ]
